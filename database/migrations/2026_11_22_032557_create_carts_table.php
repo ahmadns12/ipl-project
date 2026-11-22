@@ -10,18 +10,20 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('carts', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('id_buyer')->constrained('users')->cascadeOnDelete();
+        $table->foreignId('id_product')->constrained('products')->cascadeOnDelete();
+        $table->unsignedInteger('jumlah')->default(1);
+        $table->timestamps();
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('carts');
-    }
+        $table->unique(['id_buyer', 'id_product']);                    // 1 produk = 1 baris per buyer
+    });
+}
+
+public function down(): void
+{
+    Schema::dropIfExists('carts');
+}
 };

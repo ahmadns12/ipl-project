@@ -10,18 +10,17 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('categories', function (Blueprint $table) {
+        $table->increments('id');                                      // INT unsigned PK (sesuai SDD: INT)
+        $table->string('nama_kategori', 100);
+        $table->string('slug', 120)->unique();
+        $table->timestamps();
+    });
+}
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('categories');
-    }
+public function down(): void
+{
+    Schema::dropIfExists('categories');
+}
 };
